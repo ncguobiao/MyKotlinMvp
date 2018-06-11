@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'  //kapt3插件
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.alienware.mykotlinmvp"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // 实现毛玻璃那种透明的效果需要添加的库
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true    // Enable RS support
+
+        multiDexEnabled true
+
+        dexOptions {
+            preDexLibraries = false
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation project(':provider')
+    implementation project(':home')
+    implementation project(':search')
+    implementation project(':discovery')
+    implementation project(':hot')
+    if(isBuildModule.toBoolean()){
+        implementation project(':mine')
+    }
+}

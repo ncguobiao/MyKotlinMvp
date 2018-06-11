@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyKotlinMvp.iml" filepath="$PROJECT_DIR$/MyKotlinMvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/discovery/discovery.iml" filepath="$PROJECT_DIR$/discovery/discovery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/home/home.iml" filepath="$PROJECT_DIR$/home/home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hot/hot.iml" filepath="$PROJECT_DIR$/hot/hot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mine/mine.iml" filepath="$PROJECT_DIR$/mine/mine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/multiple-status-view/multiple-status-view.iml" filepath="$PROJECT_DIR$/multiple-status-view/multiple-status-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/provider/provider.iml" filepath="$PROJECT_DIR$/provider/provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/search/search.iml" filepath="$PROJECT_DIR$/search/search.iml" />
+    </modules>
+  </component>
+</project>
