@@ -33,7 +33,7 @@ v1.0
 
 初始化版本，主要功能已经完成。
 关于我
-Email: igeekho@gmail.com
+Email: 568164681@QQ.com
 
 Thanks
 感谢所有优秀的开源项目
