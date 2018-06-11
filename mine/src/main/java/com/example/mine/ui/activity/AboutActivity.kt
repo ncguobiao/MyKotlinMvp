@@ -34,7 +34,7 @@ class AboutActivity:BaseActivity() {
         toolbar.setNavigationOnClickListener { finish() }
         //访问 GitHub
         relayout_gitHub.onClick {
-            val uri = Uri.parse("https://github.com/git-xuhao/KotlinMvp")
+            val uri = Uri.parse("https://github.com/ncguobiao/MyKotlinMvp")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
