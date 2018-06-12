@@ -49,7 +49,7 @@ class CategoryDetailAdapter(context: Context,dataList:ArrayList<HomeBean.Issue.I
         holder.setText(R.id.tv_tag, "#${itemData?.category}/$timeFormat")
 
         holder.setOnItemClickListener(listener = View.OnClickListener {
-            goToVideoPlayer(mContext as Activity, holder.getView(R.id.iv_image), item)
+            goToVideoPlayer(context as Activity, holder.getView(R.id.iv_image), item)
         })
     }
 
@@ -76,7 +76,7 @@ class CategoryDetailAdapter(context: Context,dataList:ArrayList<HomeBean.Issue.I
                     .withObject(Constants.BUNDLE_VIDEO_DATA, itemData)
                     .withBoolean(Constants.Companion.TRANSITION, true)//sdk大于等于16的动画方法:
                     .withOptionsCompat(activityOptions)
-                    .navigation()
+                    .navigation(activity)
         } else {
             ARouter.getInstance().build(RouterPath.Video.PATH_VIDEO)
                     .withObject(Constants.BUNDLE_VIDEO_DATA, itemData)

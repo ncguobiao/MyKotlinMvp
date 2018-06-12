@@ -3,16 +3,15 @@ package com.example.search.ui.activity
 import android.annotation.TargetApi
 import android.graphics.Typeface
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.Fade
 import android.transition.Transition
 import android.transition.TransitionInflater
-import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.baselibrary.base.BaseMvpActivity
 import com.example.baselibrary.base.closeKeyBord
@@ -47,7 +46,7 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
     private var loadingMore = false
 
     private var itemList = ArrayList<HomeBean.Issue.Item>()
-
+    private lateinit var mHotKeywordsAdapter: HotKeywordsAdapter
     private val mResultAdapter by lazy {
         CategoryDetailAdapter(this, itemList, R.layout.item_category_detail)
     }
@@ -58,6 +57,8 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
 
     private var keyWords: String?=null
 
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
+    @RequiresApi(Build.VERSION_CODES.CUPCAKE)
     override fun initView() {
         mPresenter.attachView(this)
 
@@ -84,22 +85,20 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
         //取消
         tv_cancel.setOnClickListener {
             onBackPressed() }
-        //键盘的搜索按钮
-        et_search_view.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    closeSoftKeyboard()
-                    keyWords = et_search_view.text.toString().trim()
-                    if (keyWords.isNullOrEmpty()) {
-                        showToast("请输入你感兴趣的关键词")
-                    } else {
-                        mPresenter.querySearchData(keyWords!!)
-                    }
-                }
-                return false
-            }
 
-        })
+        //键盘的搜索按钮
+        et_search_view.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                closeSoftKeyboard()
+                keyWords = et_search_view.text.toString().trim()
+                if (keyWords.isNullOrEmpty()) {
+                    showToast("请输入你感兴趣的关键词")
+                } else {
+                    mPresenter.querySearchData(keyWords!!)
+                }
+            }
+            false
+        }
 
         mLayoutStatusView = multipleStatusView
 
@@ -108,7 +107,7 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
         StatusBarUtil.setPaddingSmart(this, toolbar)
     }
 
-    private lateinit var mHotKeywordsAdapter: HotKeywordsAdapter
+
 
 
     /**
@@ -142,6 +141,12 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
     override fun setSearchResult(issue: HomeBean.Issue) {
         loadingMore = false
         hideHotWordView()
+
+        tv_search_count.visibility = View.VISIBLE
+        tv_search_count.text = String.format(resources.getString(R.string.search_result_count), keyWords, issue.total)
+
+        itemList = issue.itemList
+        mResultAdapter.addData(issue.itemList)
     }
 
     override fun closeSoftKeyboard() {
@@ -295,7 +300,7 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
                         }
 
                         override fun onRevealShow() {
-
+                            setUpView()
                         }
                     })
         } else {
@@ -312,7 +317,6 @@ class SearchActivity : BaseMvpActivity<SearchPresenter>(), SearchContract.View {
     override fun onDestroy() {
         CleanLeakUtils.fixInputMethodManagerLeak(this)
         super.onDestroy()
-        mPresenter.detachView()
         mTextTypeface = null
 
     }
